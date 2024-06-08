@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.2.0](https://github.com/eslint-stylistic/eslint-stylistic/compare/v2.1.0...v2.2.0) (2024-06-08)
+
+
+### Features
+
+* **js:** add option `ignoreStringLiterals` ([#401](https://github.com/eslint-stylistic/eslint-stylistic/issues/401)) ([1b6d563](https://github.com/eslint-stylistic/eslint-stylistic/commit/1b6d563921b408723fa9a5bd911f5890c698f649)), closes [#400](https://github.com/eslint-stylistic/eslint-stylistic/issues/400)
+* **jsx-one-expression-per-line:** allow `non-jsx` ([#393](https://github.com/eslint-stylistic/eslint-stylistic/issues/393)) ([431d564](https://github.com/eslint-stylistic/eslint-stylistic/commit/431d56475af2ba183421cb051e486b2bb6940169))
+
+
+### Bug Fixes
+
+* **quotes:** allow template literals to avoid escape sequences ([#410](https://github.com/eslint-stylistic/eslint-stylistic/issues/410)) ([1891c5f](https://github.com/eslint-stylistic/eslint-stylistic/commit/1891c5fd8ae3580b892694836c2a387070de2084))
+
 ## [2.1.0](https://github.com/eslint-stylistic/eslint-stylistic/compare/v2.0.0...v2.1.0) (2024-05-09)
 
 
