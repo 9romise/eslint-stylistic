@@ -272,6 +272,22 @@ run<RuleOptions, MessageIds>({
       options: [BOTH],
       parserOptions: { ecmaVersion: 6, sourceType: 'module' },
     },
+    {
+      code: 'class Foo<A>extends B {}',
+      options: [BOTH],
+    },
+    {
+      code: 'class Foo <A> extends B {}',
+      options: [NEITHER],
+    },
+    {
+      code: 'const Foo = class<A>extends B {}',
+      options: [BOTH],
+    },
+    {
+      code: 'const Foo = class <A> extends B {}',
+      options: [NEITHER],
+    },
   ],
   invalid: [
     // ----------------------------------------------------------------------

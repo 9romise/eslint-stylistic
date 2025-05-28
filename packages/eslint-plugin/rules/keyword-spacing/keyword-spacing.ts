@@ -306,6 +306,20 @@ export default createRule<RuleOptions, MessageIds>({
     }
 
     /**
+     * Reports the previous token of a given node if the token is a keyword and
+     * usage of spacing followed by the token is invalid.
+     * @param node A node to report.
+     */
+    function checkSpacingAfterTokenBefore(node: ASTNode | null) {
+      if (node) {
+        const token = sourceCode.getTokenBefore(node, isKeywordToken)
+
+        if (token)
+          checkSpacingAfter(token)
+      }
+    }
+
+    /**
      * Reports `async` or `function` keywords of a given node if usage of
      * spacing around those keywords is invalid.
      * @param node A node to report.
@@ -332,8 +346,15 @@ export default createRule<RuleOptions, MessageIds>({
      * @param node A node to report.
      */
     function checkSpacingForClass(node: Tree.ClassDeclaration | Tree.ClassExpression) {
-      checkSpacingAroundFirstToken(node)
-      checkSpacingAroundTokenBefore(node.superClass)
+      // handled by `type-generic-spacing`
+      if (node.typeParameters) {
+        checkSpacingBeforeFirstToken(node)
+        checkSpacingAfterTokenBefore(node.superClass)
+      }
+      else {
+        checkSpacingAroundFirstToken(node)
+        checkSpacingAroundTokenBefore(node.superClass)
+      }
     }
 
     /**
