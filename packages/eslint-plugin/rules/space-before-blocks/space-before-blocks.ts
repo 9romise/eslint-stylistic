@@ -162,7 +162,17 @@ export default createRule<RuleOptions, MessageIds>({
 
     return {
       BlockStatement: checkPrecedingSpace,
-      ClassBody: checkPrecedingSpace,
+      ClassBody(node) {
+        const classNode = node.parent
+        // handled by `type-generic-spacing`
+        if (!classNode.superClass && classNode.typeParameters)
+          return
+        // handled by `type-generic-spacing`
+        if (classNode.superTypeArguments)
+          return
+
+        checkPrecedingSpace(node)
+      },
       SwitchStatement(node) {
         const cases = node.cases
         let openingBrace: Token

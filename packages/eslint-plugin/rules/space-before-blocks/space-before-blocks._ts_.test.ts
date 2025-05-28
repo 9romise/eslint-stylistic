@@ -81,6 +81,42 @@ run<RuleOptions, MessageIds>({
       `,
       options: [{ classes: 'off' }],
     },
+    {
+      code: $`
+        class Foo<T>{}
+      `,
+      options: [{ classes: 'always' }],
+    },
+    {
+      code: $`
+        const Foo = class<T> {}
+      `,
+      options: [{ classes: 'never' }],
+    },
+    {
+      code: $`
+        class Foo<T> extends Bar {}
+      `,
+      options: [{ classes: 'always' }],
+    },
+    {
+      code: $`
+        const Foo = class<T> extends Bar{}
+      `,
+      options: [{ classes: 'never' }],
+    },
+    {
+      code: $`
+        class Foo<T> extends Bar<U>{}
+      `,
+      options: [{ classes: 'always' }],
+    },
+    {
+      code: $`
+        const Foo = class<T> extends Bar<U> {}
+      `,
+      options: [{ classes: 'never' }],
+    },
   ],
   invalid: [
     {
@@ -233,6 +269,24 @@ run<RuleOptions, MessageIds>({
           messageId: 'unexpectedSpace',
         },
       ],
+      options: [{ classes: 'never' }],
+    },
+    {
+      code: $`
+        class Foo<T> extends Bar{}
+      `,
+      output: $`
+        class Foo<T> extends Bar {}
+      `,
+      options: [{ classes: 'always' }],
+    },
+    {
+      code: $`
+        const Foo = class<T> extends Bar {}
+      `,
+      output: $`
+        const Foo = class<T> extends Bar{}
+      `,
       options: [{ classes: 'never' }],
     },
   ],
