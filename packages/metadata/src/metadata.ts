@@ -443,20 +443,6 @@ export const packages: Readonly<PackageInfo[]> = Object.freeze([
         }
       },
       {
-        "name": "jsx-indent",
-        "ruleId": "@stylistic/jsx-indent",
-        "originalId": "",
-        "entry": "packages/eslint-plugin/rules/jsx-indent/index.ts",
-        "docsEntry": "packages/eslint-plugin/rules/jsx-indent/README._jsx_.md",
-        "meta": {
-          "fixable": "whitespace",
-          "docs": {
-            "description": "Enforce JSX indentation. Deprecated, use `indent` rule instead.",
-            "recommended": false
-          }
-        }
-      },
-      {
         "name": "jsx-indent-props",
         "ruleId": "@stylistic/jsx-indent-props",
         "originalId": "",
