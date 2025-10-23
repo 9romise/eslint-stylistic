@@ -220,7 +220,8 @@ run<RuleOptions, MessageIds>({
       options: [NEITHER],
     },
 
-    // no conflict with `type-generic-spacing`
+    // #region no conflict with `type-generic-spacing`
+    // ClassDeclaration
     {
       code: 'export default class<T> {}',
       options: [BOTH],
@@ -229,7 +230,16 @@ run<RuleOptions, MessageIds>({
       code: 'export default class <T> {}',
       options: [NEITHER],
     },
-
+    // ClassExpression
+    {
+      code: 'const foo = class<T> {}',
+      options: [BOTH],
+    },
+    {
+      code: 'const foo = class <T> {}',
+      options: [NEITHER],
+    },
+    // #endregion
     {
       code: 'export type { foo } from "foo";',
       options: [BOTH],
