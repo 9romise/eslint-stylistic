@@ -361,6 +361,7 @@ export default createRule<RuleOptions, MessageIds>({
      * @param node A node to report.
      */
     function checkSpacingForClass(node: Tree.ClassDeclaration | Tree.ClassExpression) {
+      // `class`
       // handled by `type-generic-spacing`
       if (!node.id && node.typeParameters) {
         checkSpacingBeforeFirstToken(node)
@@ -370,6 +371,7 @@ export default createRule<RuleOptions, MessageIds>({
       }
 
       // `extends`
+      // handled by `type-generic-spacing`
       if (node.typeParameters) {
         checkSpacingAfterTokenBefore(node.superClass)
       }
