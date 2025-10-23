@@ -308,6 +308,20 @@ export default createRule<RuleOptions, MessageIds>({
 
     /**
      * Reports the previous token of a given node if the token is a keyword and
+     * usage of spacing followed by the token is invalid.
+     * @param node A node to report.
+     */
+    function checkSpacingAfterTokenBefore(node: ASTNode | null) {
+      if (node) {
+        const token = sourceCode.getTokenBefore(node, isKeywordToken)
+
+        if (token)
+          checkSpacingAfter(token)
+      }
+    }
+
+    /**
+     * Reports the previous token of a given node if the token is a keyword and
      * usage of spacing around the token is invalid.
      * @param node A node to report.
      */
@@ -356,7 +370,12 @@ export default createRule<RuleOptions, MessageIds>({
       }
 
       // `extends`
-      checkSpacingAroundTokenBefore(node.superClass)
+      if (node.typeParameters) {
+        checkSpacingAfterTokenBefore(node.superClass)
+      }
+      else {
+        checkSpacingAroundTokenBefore(node.superClass)
+      }
     }
 
     /**

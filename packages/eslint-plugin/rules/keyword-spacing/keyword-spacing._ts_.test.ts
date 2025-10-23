@@ -223,20 +223,20 @@ run<RuleOptions, MessageIds>({
     // #region no conflict with `type-generic-spacing`
     // ClassDeclaration
     {
-      code: 'export default class<T> {}',
+      code: 'export default class<T>extends Foo {}',
       options: [BOTH],
     },
     {
-      code: 'export default class <T> {}',
+      code: 'export default class <T> extends Foo {}',
       options: [NEITHER],
     },
     // ClassExpression
     {
-      code: 'const foo = class<T> {}',
+      code: 'const foo = class<T>extends Foo {}',
       options: [BOTH],
     },
     {
-      code: 'const foo = class <T> {}',
+      code: 'const foo = class <T> extends Foo {}',
       options: [NEITHER],
     },
     // #endregion
