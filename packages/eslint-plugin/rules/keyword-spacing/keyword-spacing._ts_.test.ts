@@ -219,6 +219,17 @@ run<RuleOptions, MessageIds>({
       code: 'class C { @readonly accessor foo = 1 }',
       options: [NEITHER],
     },
+
+    // no conflict with `type-generic-spacing`
+    {
+      code: 'export default class<T> {}',
+      options: [BOTH],
+    },
+    {
+      code: 'export default class <T> {}',
+      options: [NEITHER],
+    },
+
     {
       code: 'export type { foo } from "foo";',
       options: [BOTH],
