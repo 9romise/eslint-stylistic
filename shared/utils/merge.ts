@@ -1,4 +1,4 @@
-type ObjectLike<T = unknown> = Record<string, T>
+type ObjectLike<K extends string = string, T = unknown> = Record<K, T>
 
 /**
  * Check if the variable contains an object strictly rejecting arrays

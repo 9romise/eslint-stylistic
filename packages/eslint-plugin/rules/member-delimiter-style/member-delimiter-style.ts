@@ -1,4 +1,5 @@
-import type { JSONSchema, ReportFixFunction, Token, Tree } from '#types'
+import type { JSONSchema, Token, Tree } from '#types'
+import type { DelimiterConfig, MessageIds, RuleOptions } from './types'
 import { AST_NODE_TYPES, isSingleLine } from '#utils/ast'
 import { createRule } from '#utils/create-rule'
 import { deepMerge } from '#utils/merge'
@@ -12,34 +13,6 @@ type TypeOptions = {
 }
 type TypeOptionsWithType = TypeOptions & {
   type: string
-}
-// eslint-disable-next-line ts/consistent-type-definitions
-type BaseOptions = {
-  multiline?: TypeOptions
-  singleline?: TypeOptions
-}
-type Config = BaseOptions & {
-  overrides?: {
-    typeLiteral?: BaseOptions
-    interface?: BaseOptions
-  }
-  multilineDetection?: 'brackets' | 'last-member'
-}
-type Options = [Config]
-type MessageIds
-  = | 'expectedComma'
-    | 'expectedSemi'
-    | 'unexpectedComma'
-    | 'unexpectedSemi'
-
-interface MakeFixFunctionParams {
-  optsNone: boolean
-  optsSemi: boolean
-  lastToken: Token
-  commentsAfterLastToken: Token | undefined
-  missingDelimiter: boolean
-  lastTokenLine: string
-  isSingleLine: boolean
 }
 
 function isLastTokenEndOfLine(token: Token, line: string): boolean {
@@ -58,43 +31,6 @@ function isCommentsEndOfLine(token: Token, comments: Token | undefined, line: st
   const positionInLine = comments.loc.end.column
 
   return positionInLine === line.length
-}
-
-function makeFixFunction({
-  optsNone,
-  optsSemi,
-  lastToken,
-  commentsAfterLastToken,
-  missingDelimiter,
-  lastTokenLine,
-  isSingleLine,
-}: MakeFixFunctionParams): ReportFixFunction | undefined {
-  // if removing is the action but last token is not the end of the line
-  if (
-    optsNone
-    && !isLastTokenEndOfLine(lastToken, lastTokenLine)
-    && !isCommentsEndOfLine(lastToken, commentsAfterLastToken, lastTokenLine)
-    && !isSingleLine
-  ) {
-    return
-  }
-
-  return (fixer) => {
-    if (optsNone) {
-      // remove the unneeded token
-      return fixer.remove(lastToken)
-    }
-
-    const token = optsSemi ? ';' : ','
-
-    if (missingDelimiter) {
-      // add the missing delimiter
-      return fixer.insertTextAfter(lastToken, token)
-    }
-
-    // correct the current delimiter
-    return fixer.replaceText(lastToken, token)
-  }
 }
 
 const BASE_SCHEMA: JSONSchema.JSONSchema4 = {
@@ -120,7 +56,7 @@ const BASE_SCHEMA: JSONSchema.JSONSchema4 = {
   additionalProperties: false,
 }
 
-export default createRule<Options, MessageIds>({
+export default createRule<RuleOptions, MessageIds>({
   name: 'member-delimiter-style',
   meta: {
     type: 'layout',
@@ -142,7 +78,7 @@ export default createRule<Options, MessageIds>({
             type: 'string',
             enum: ['none', 'semi', 'comma'],
           },
-          // note can't have "none" for single line delimiter as it's invalid syntax
+          // note - can't have "none" for single line delimiter as it's invalid syntax
           singleLineOption: {
             type: 'string',
             enum: ['semi', 'comma'],
@@ -190,16 +126,18 @@ export default createRule<Options, MessageIds>({
   create(context, [options]) {
     const sourceCode = context.sourceCode
 
-    // use the base options as the defaults for the cases
-    const baseOptions = options
-    const overrides = baseOptions.overrides ?? {}
-    const interfaceOptions: BaseOptions = deepMerge(
-      baseOptions,
-      overrides.interface,
+    const {
+      overrides,
+      multilineDetection,
+    } = options!
+
+    const interfaceOptions: DelimiterConfig = deepMerge(
+      options!,
+      overrides?.interface,
     )
-    const typeLiteralOptions: BaseOptions = deepMerge(
-      baseOptions,
-      overrides.typeLiteral,
+    const typeLiteralOptions: DelimiterConfig = deepMerge(
+      options as Record<string, unknown>,
+      overrides?.typeLiteral as Record<string, unknown>,
     )
 
     /**
@@ -288,15 +226,31 @@ export default createRule<Options, MessageIds>({
             },
           },
           messageId,
-          fix: makeFixFunction({
-            optsNone,
-            optsSemi,
-            lastToken,
-            commentsAfterLastToken,
-            missingDelimiter,
-            lastTokenLine,
-            isSingleLine: opts.type === 'single-line',
-          }),
+          fix: (fixer) => {
+            if (
+              optsNone
+              && !isLastTokenEndOfLine(lastToken, lastTokenLine)
+              && !isCommentsEndOfLine(lastToken, commentsAfterLastToken, lastTokenLine)
+              && !isSingleLine
+            ) {
+              return null
+            }
+
+            if (optsNone) {
+              // remove the unneeded token
+              return fixer.remove(lastToken)
+            }
+
+            const token = optsSemi ? ';' : ','
+
+            if (missingDelimiter) {
+              // add the missing delimiter
+              return fixer.insertTextAfter(lastToken, token)
+            }
+
+            // correct the current delimiter
+            return fixer.replaceText(lastToken, token)
+          },
         })
       }
     }
@@ -312,7 +266,7 @@ export default createRule<Options, MessageIds>({
 
       let _isSingleLine = isSingleLine(node)
       if (
-        options.multilineDetection === 'last-member'
+        multilineDetection === 'last-member'
         && !_isSingleLine
         && members.length > 0
       ) {
