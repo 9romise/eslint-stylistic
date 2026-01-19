@@ -83,6 +83,8 @@ The default for each option is `"never"` unless otherwise specified.
 - `"generics"` is for trailing comma in generic. (e.g. `function foo<T,>() {}`)
 - `"tuples"` is for trailing comma in tuple. (e.g. `type Foo = [string,]`)
 
+<!-- DEFAULT_OPTIONS -->
+
 ### never
 
 Examples of **incorrect** code for this rule with the default `"never"` option:

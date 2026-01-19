@@ -21,4 +21,5 @@ export interface RuleMeta {
     experimental?: boolean
     recommended?: boolean
   }
+  defaultOptions?: any
 }

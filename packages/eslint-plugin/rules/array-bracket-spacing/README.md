@@ -46,6 +46,8 @@ This rule has built-in exceptions:
 - `"never"` (and also the exceptions to the `"always"` option) allows newlines inside array brackets, because this is a common pattern
 - `"always"` does not require spaces or newlines in empty array literals `[]`
 
+<!-- DEFAULT_OPTIONS -->
+
 ### never
 
 Examples of **incorrect** code for this rule with the default `"never"` option:

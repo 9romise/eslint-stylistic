@@ -17,6 +17,8 @@ This rule has a string option:
 - `"always"` (default) requires one or more spaces
 - `"never"` disallows spaces
 
+<!-- DEFAULT_OPTIONS -->
+
 ### always
 
 Examples of **incorrect** code for this rule with the default `"always"` option:

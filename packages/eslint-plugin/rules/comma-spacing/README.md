@@ -46,6 +46,8 @@ This rule has an object option:
 - `"after": true` (default) requires one or more spaces after commas
 - `"after": false` disallows spaces after commas
 
+<!-- DEFAULT_OPTIONS -->
+
 ### after
 
 Examples of **incorrect** code for this rule with the default `{ "before": false, "after": true }` options:

@@ -45,6 +45,8 @@ Object option:
 
 - `"enforceForClassMembers": true` (default) additionally applies this rule to class members.
 
+<!-- DEFAULT_OPTIONS -->
+
 ### never
 
 Examples of **incorrect** code for this rule with the default `"never"` option:

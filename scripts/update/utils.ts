@@ -60,6 +60,7 @@ export async function readPackages() {
                 experimental,
                 recommended: rulesInSharedConfig.has(`@stylistic/${name}`),
               },
+              defaultOptions: meta?.defaultOptions,
             },
           } satisfies RuleInfo
         }),

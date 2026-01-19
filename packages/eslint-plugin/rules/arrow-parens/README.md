@@ -56,6 +56,8 @@ Object properties for variants of the `"as-needed"` option:
 
 - `"requireForBlockBody": true` modifies the as-needed rule in order to require parens if the function body is in an instructions block (surrounded by braces).
 
+<!-- DEFAULT_OPTIONS -->
+
 ### always
 
 Examples of **incorrect** code for this rule with the default `"always"` option:

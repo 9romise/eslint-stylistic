@@ -62,6 +62,8 @@ This rule has an object option for an exception:
 
 - `"allowSingleLine": true` (default `false`) allows the opening and closing braces for a block to be on the _same_ line
 
+<!-- DEFAULT_OPTIONS -->
+
 ### 1tbs
 
 Examples of **incorrect** code for this rule with the default `"1tbs"` option:

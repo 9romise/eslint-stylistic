@@ -46,6 +46,8 @@ Alternatively, different configurations can be specified for array expressions a
 - `"ArrayExpression"` configuration for array expressions (if unspecified, this rule will not apply to array expressions)
 - `"ArrayPattern"` configuration for array patterns of destructuring assignments (if unspecified, this rule will not apply to array patterns)
 
+<!-- DEFAULT_OPTIONS -->
+
 ### always
 
 Examples of **incorrect** code for this rule with the default `"always"` option:

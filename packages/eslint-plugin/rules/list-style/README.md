@@ -32,9 +32,7 @@ This rule accepts an object option:
   - [`"minItems"`](#minitems): Minimum number of elements allowed before auto-fixing to single-line
 - [`"overrides"`](#overrides): Override options based on bracket type or node type
 
-The default configuration of this rule is:
-
-<<< ./list-style.ts#defaultOptions
+<!-- DEFAULT_OPTIONS -->
 
 ### singleLine
 

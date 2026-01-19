@@ -102,7 +102,6 @@ export default createRule<RuleOptions, MessageIds>({
         },
       },
     ],
-    // #region defaultOptions
     defaultOptions: [{
       singleLine: {
         spacing: 'never',
@@ -115,7 +114,6 @@ export default createRule<RuleOptions, MessageIds>({
         '{}': { singleLine: { spacing: 'always' } },
       },
     }],
-    // #endregion defaultOptions
     messages: {
       shouldSpacing: `Should have space between '{{prev}}' and '{{next}}'`,
       shouldNotSpacing: `Should not have space(s) between '{{prev}}' and '{{next}}'`,

@@ -30,6 +30,8 @@ The rule takes one option, a string:
 - If it is `"object"` (default), the dot in a member expression should be on the same line as the object portion.
 - If it is `"property"`, the dot in a member expression should be on the same line as the property portion.
 
+<!-- DEFAULT_OPTIONS -->
+
 ### object
 
 The default `"object"` option requires the dot to be on the same line as the object.

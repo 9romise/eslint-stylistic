@@ -24,6 +24,8 @@ Or an object option (Requires line breaks if any of properties is satisfied. Oth
 - `"multiline": true` (default) requires line breaks if there are line breaks inside elements or between elements. If this is false, this condition is disabled.
 - `"minItems": null` (default) requires line breaks if the number of elements is at least the given integer. If this is 0, this condition will act the same as the option `"always"`. If this is `null` (the default), this condition is disabled.
 
+<!-- DEFAULT_OPTIONS -->
+
 ### always
 
 Examples of **incorrect** code for this rule with the `"always"` option:

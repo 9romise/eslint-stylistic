@@ -54,6 +54,8 @@ You can specify different options for different kinds of blocks:
 - `"WithStatement"` - A with statement body
 - `"TSModuleBlock"` - A TypeScript module block
 
+<!-- DEFAULT_OPTIONS -->
+
 ### always
 
 Examples of **incorrect** code for this rule with the `"always"` option:

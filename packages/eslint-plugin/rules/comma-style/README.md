@@ -68,6 +68,8 @@ This rule also accepts an additional `exceptions` object:
 
 A way to determine the node types as defined by [ESTree](https://github.com/estree/estree) and [@typescript-eslint/parser](https://typescript-eslint.io/packages/parser/) is to use [AST Explorer](https://ast-explorer.dev/) with the espree parser or @typescript-eslint/parser.
 
+<!-- DEFAULT_OPTIONS -->
+
 ### last
 
 Examples of **incorrect** code for this rule with the default `"last"` option:

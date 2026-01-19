@@ -25,9 +25,19 @@ export function MarkdownTransform(): Plugin {
     return content.trimStart().replace(/^# .*\n/, '')
   }
 
-  function addDefaultOptions(content: string) {
-    // TODO
-    return content
+  function addDefaultOptions(content: string, rule: RuleInfo) {
+    const { defaultOptions } = rule.meta || {}
+    if (!defaultOptions)
+      return content
+
+    return content.replace(
+      '<!-- DEFAULT_OPTIONS -->',
+      `The default configuration of this rule is:
+\`\`\`json
+${JSON.stringify(defaultOptions, null, 2)}
+\`\`\`
+`,
+    )
   }
 
   function resolveLink(link: string) {
@@ -76,7 +86,7 @@ export function MarkdownTransform(): Plugin {
         [
           `# <samp>${rule.name}${sup ? ` <sup>${sup}</sup>` : ''}</samp>`,
           experimental ? addExperimentalTip(rule) : '',
-          addDefaultOptions(removeHeadings(content)),
+          addDefaultOptions(removeHeadings(content), rule),
           addExtraLinks('Related Rules', data.related_rules),
           addExtraLinks('Further Reading', data.further_reading),
         ].join('\n'),
