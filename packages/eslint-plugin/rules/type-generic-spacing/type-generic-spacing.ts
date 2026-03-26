@@ -16,6 +16,9 @@ const PRESERVE_PREFIX_SPACE_BEFORE_GENERIC = new Set<NodeTypes>([
   //               ^
   // handled by `space-unary-ops`
   'TSConstructorType',
+  // const foo = function <T>() {}
+  //                     ^
+  // handled by `keyword-spacing`
   'FunctionExpression',
   // const foo = class <T> {}
   //                  ^

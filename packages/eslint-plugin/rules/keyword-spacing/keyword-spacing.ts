@@ -331,12 +331,21 @@ export default createRule<RuleOptions, MessageIds>({
         | Tree.ArrowFunctionExpression
         | Tree.FunctionExpression,
     ) {
-      const firstToken = node && sourceCode.getFirstToken(node)
+      if (node.async) {
+        const asyncToken = sourceCode.getFirstToken(node)
+        if (asyncToken?.value === 'async')
+          checkSpacingBefore(asyncToken)
+      }
 
-      if (firstToken
-        && ((isKeywordToken(firstToken) && firstToken.value === 'function')
-          || firstToken.value === 'async')) {
-        checkSpacingBefore(firstToken)
+      if (node.type !== 'ArrowFunctionExpression') {
+        const functionToken = sourceCode.getFirstToken(node, {
+          filter: token => isKeywordToken(token) && token.value === 'function',
+        })!
+        if (functionToken) {
+          checkSpacingBefore(functionToken)
+          if (!node.id && node.typeParameters)
+            checkSpacingAfter(functionToken)
+        }
       }
     }
 

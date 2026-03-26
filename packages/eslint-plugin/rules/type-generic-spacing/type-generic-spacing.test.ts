@@ -37,7 +37,8 @@ run<RuleOptions, MessageIds>({
         foo?: <T>(name: T) => void
       }
     `,
-    `const toSortedImplementation = Array.prototype.toSorted || function <T>(name: T): void {}`,
+    `function foo<T>(name: T): void {}`,
+    `const foo = function<T>(name: T): void {}`,
     `const foo = class <T> { value: T; }`,
   ],
   invalid: ([
@@ -78,8 +79,13 @@ run<RuleOptions, MessageIds>({
       2,
     ],
     [
-      'const toSortedImplementation = Array.prototype.toSorted || function <    T >(name: T): void {}',
-      'const toSortedImplementation = Array.prototype.toSorted || function <T>(name: T): void {}',
+      'function foo <    T >(name: T): void {}',
+      'function foo<T>(name: T): void {}',
+      3,
+    ],
+    [
+      'const foo = function<    T >(name: T): void {}',
+      'const foo = function<T>(name: T): void {}',
       2,
     ],
   ] as const)
