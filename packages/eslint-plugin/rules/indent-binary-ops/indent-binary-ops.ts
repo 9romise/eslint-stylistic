@@ -8,9 +8,10 @@ export default createRule<RuleOptions, MessageIds>({
   meta: {
     type: 'layout',
     docs: {
-      description: 'Indentation for binary operators',
+      description: 'Indentation for binary operators (deprecated, use indent rule instead)',
     },
     fixable: 'whitespace',
+    deprecated: true,
     schema: [
       {
         oneOf: [

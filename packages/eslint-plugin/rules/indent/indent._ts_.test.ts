@@ -860,9 +860,9 @@ run<RuleOptions, MessageIds>({
     // https://github.com/eslint-stylistic/eslint-stylistic/issues/901
     $`
       type SomeType =
-        'one'
-        | 'two'
-        | 'four'
+          'one'
+          | 'two'
+          | 'four'
       ;
     `,
     // https://github.com/eslint-stylistic/eslint-stylistic/issues/909
@@ -894,6 +894,109 @@ run<RuleOptions, MessageIds>({
           =
               require('source')
     `,
+    // #region indent-binary-ops
+    $`
+      if (
+          this.level >= this.max ||
+          this.level <= this.min
+      ) {
+          this.overflow = true;
+      }
+    `,
+    $`
+      const woof = computed(() => keys.value.filter(
+          ({ type }) => type === 'bark' ||
+              type === 'pooque' ||
+              type === 'srenque'
+      ));
+    `,
+    $`
+      if (a
+          && b
+          && c
+          && (d
+              || e
+              || f
+          )
+      ) {}
+    `,
+    // $`
+    //   type Foo = Pick<Bar,
+    //       Baz
+    //       | Qux,
+    //   >;
+    // `,
+    // $`
+    //   type Foo = [Bar,
+    //       Baz
+    //       | Qux,
+    //   ];
+    // `,
+    // $`
+    //   type Foo = { x: Foo,
+    //       y: Baz
+    //           | Quz
+    //   };
+    // `,
+    // $`
+    //   type Foo = Pick<Bar
+    //       | Baz,
+    //       Baz
+    //       | Qux,
+    //   >;
+    // `,
+    // $`
+    //   type Foo = [Bar
+    //       | Baz,
+    //       Baz
+    //       | Qux,
+    //   ];
+    // `,
+    // $`
+    //   type Foo = { x: Foo
+    //       | Baz,
+    //       y: Baz
+    //           | Quz
+    //   };
+    // `,
+    $`
+      const a = 1
+          + 2
+          + 3;
+    `,
+    $`
+      a = 1
+          + 2
+          + 3;
+    `,
+    $`
+      this.a = this.b
+          || c
+          || d;
+    `,
+    $`
+      { aaaaa &&
+          bbbbb &&
+          ccccc }
+    `,
+    $`
+      {
+          aaaaa &&
+          bbbbb &&
+          ccccc
+      }
+    `,
+    $`
+      if (condition1 &&
+          condition2 &&
+          condition3
+      ) {
+          a &&
+          b() &&
+          c()
+      }
+    `,
+    // #endregion
   ],
   invalid: [
     ...individualNodeTests.invalid!,
@@ -2310,5 +2413,412 @@ declare function h(x: number): number;
         { messageId: 'wrongIndentation', data: { expected: '8 spaces', actual: 0 } },
       ],
     },
+    // #region indent-binary-ops
+    {
+      code: $`
+        if (
+          a && (
+            a.b ||
+              a.c
+          ) &&
+            a.d
+        ) {}
+      `,
+      output: $`
+        if (
+          a && (
+            a.b ||
+            a.c
+          ) &&
+          a.d
+        ) {}
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        const a =
+          x +
+            y * z
+      `,
+      output: $`
+        const a =
+          x +
+          y * z
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        if (
+          aaaaaa >
+        bbbbb
+        ) {}
+      `,
+      output: $`
+        if (
+          aaaaaa >
+          bbbbb
+        ) {}
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        function foo() {
+          if (a
+          || b
+              || c || d
+                || (d && b)
+          ) {
+            foo()
+          }
+        }
+      `,
+      output: $`
+        function foo() {
+          if (a
+            || b
+            || c || d
+            || (d && b)
+          ) {
+            foo()
+          }
+        }
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        type Foo = A | B
+          | C | D
+            | E
+      `,
+      output: $`
+        type Foo = A | B
+          | C | D
+          | E
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        type Foo =
+        | A | C
+          | B
+      `,
+      output: $`
+        type Foo =
+          | A | C
+          | B
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        type T =
+        a
+        | b
+          | c
+      `,
+      output: $`
+        type T =
+          a
+          | b
+          | c
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        function TSPropertySignatureToProperty(
+          node:
+          | TSESTree.TSEnumMember
+            | TSESTree.TSPropertySignature
+          | TSESTree.TypeElement,
+          type:
+          | AST_NODE_TYPES.Property
+            | AST_NODE_TYPES.PropertyDefinition = AST_NODE_TYPES.Property,
+        ): TSESTree.Node | null {}
+      `,
+      output: $`
+        function TSPropertySignatureToProperty(
+          node:
+            | TSESTree.TSEnumMember
+            | TSESTree.TSPropertySignature
+            | TSESTree.TypeElement,
+          type:
+            | AST_NODE_TYPES.Property
+            | AST_NODE_TYPES.PropertyDefinition = AST_NODE_TYPES.Property,
+        ): TSESTree.Node | null {}
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        type Foo = Merge<
+            A
+          & B
+            & C
+        >
+      `,
+      output: $`
+        type Foo = Merge<
+          A
+          & B
+          & C
+        >
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        if (
+          typeof woof === 'string' &&
+          typeof woof === 'string' &&
+            typeof woof === 'string' &&
+          isNaN(null) &&
+            isNaN(NaN)
+        ) {
+          return;
+        }
+      `,
+      output: $`
+        if (
+          typeof woof === 'string' &&
+          typeof woof === 'string' &&
+          typeof woof === 'string' &&
+          isNaN(null) &&
+          isNaN(NaN)
+        ) {
+          return;
+        }
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        const a = () => b
+        || c
+        
+        const a = (
+          p,
+        ) => (b
+        || c)
+        
+        const a = b
+        + c;
+        const a = {
+          p: b
+          + c,
+        };
+      `,
+      output: $`
+        const a = () => b
+          || c
+        
+        const a = (
+          p,
+        ) => (b
+          || c)
+        
+        const a = b
+          + c;
+        const a = {
+          p: b
+            + c,
+        };
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        const a = (
+          (b
+              && c)
+            || (d
+          && e)
+        )
+      `,
+      output: $`
+        const a = (
+          (b
+            && c)
+          || (d
+            && e)
+        )
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        {
+          const a = false
+          || (a && b)
+          || (c && d)
+          || (e && f)
+          || (g && h)
+        }
+      `,
+      output: $`
+        {
+          const a = false
+            || (a && b)
+            || (c && d)
+            || (e && f)
+            || (g && h)
+        }
+      `,
+      options: [2],
+    },
+    // {
+    //   code: $`
+    //     type Foo = Pick<Bar,
+    //     Baz
+    //         | Qux,
+    //     >;
+    //   `,
+    //   output: $`
+    //     type Foo = Pick<Bar,
+    //       Baz
+    //       | Qux,
+    //     >;
+    //   `,
+    //   options: [2],
+    // },
+    // {
+    //   code: $`
+    //     type Foo = [Bar,
+    //     Baz
+    //           | Qux,
+    //     ];
+    //   `,
+    //   output: $`
+    //     type Foo = [Bar,
+    //       Baz
+    //       | Qux,
+    //     ];
+    //   `,
+    //   options: [2],
+    // },
+    // {
+    //   code: $`
+    //     type Foo = { x: Foo,
+    //       y: Baz
+    //       | Quz
+    //     };
+    //   `,
+    //   output: $`
+    //     type Foo = { x: Foo,
+    //       y: Baz
+    //         | Quz
+    //     };
+    //   `,
+    //   options: [2],
+    // },
+    // {
+    //   code: $`
+    //     type Foo = Pick<Bar
+    //     | Baz,
+    //     Baz
+    //         | Qux,
+    //     >;
+    //   `,
+    //   output: $`
+    //     type Foo = Pick<Bar
+    //       | Baz,
+    //       Baz
+    //       | Qux,
+    //     >;
+    //   `,
+    //   options: [2],
+    // },
+    // {
+    //   code: $`
+    //     type Foo = [Bar
+    //     | Baz,
+    //     Baz
+    //           | Qux,
+    //     ];
+    //   `,
+    //   output: $`
+    //     type Foo = [Bar
+    //       | Baz,
+    //       Baz
+    //       | Qux,
+    //     ];
+    //   `,
+    //   options: [2],
+    // },
+    // {
+    //   code: $`
+    //     type Foo = { x: Foo
+    //     | Baz,
+    //       y: Baz
+    //       | Quz
+    //     };
+    //   `,
+    //   output: $`
+    //     type Foo = { x: Foo
+    //       | Baz,
+    //       y: Baz
+    //         | Quz
+    //     };
+    //   `,
+    //   options: [2],
+    // },
+    {
+      code: $`
+        const a = 1
+        + 2
+            + 3;
+      `,
+      output: $`
+        const a = 1
+          + 2
+          + 3;
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        a = 1
+        - 2
+            - 3;
+      `,
+      output: $`
+        a = 1
+          - 2
+          - 3;
+      `,
+      options: [2],
+    },
+    {
+      code: $`
+        this.a = this.b
+        || 2
+            || 3;
+      `,
+      output: $`
+        this.a = this.b
+          || 2
+          || 3;
+      `,
+      options: [2],
+    },
+    // {
+    //   code: $`
+    //     { aaaaa &&
+    //           bbbbb &&
+    //         ccccc }
+    //   `,
+    //   output: $`
+    //     { aaaaa &&
+    //       bbbbb &&
+    //       ccccc }
+    //   `,
+    //   options: [2],
+    // },
+    // #endregion
   ],
 })

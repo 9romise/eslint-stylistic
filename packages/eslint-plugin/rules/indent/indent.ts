@@ -159,10 +159,8 @@ const KNOWN_NODES = new Set([
   AST_NODE_TYPES.TSTypeParameterInstantiation,
   AST_NODE_TYPES.TSTypeReference,
   AST_NODE_TYPES.Decorator,
-
-  // These are took care by `indent-binary-ops` rule
-  // AST_NODE_TYPES.TSIntersectionType,
-  // AST_NODE_TYPES.TSUnionType,
+  AST_NODE_TYPES.TSIntersectionType,
+  AST_NODE_TYPES.TSUnionType,
 ])
 
 type ElementListOffset = 'first' | 'off' | number

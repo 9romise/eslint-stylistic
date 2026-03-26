@@ -68,7 +68,6 @@ export function customize(options: StylisticCustomizeOptions = {}): Linter.Confi
     '@stylistic/eol-last': severity,
     '@stylistic/generator-star-spacing': [severity, { after: true, before: false }],
     '@stylistic/indent': [severity, indentLevel, indentOptions],
-    '@stylistic/indent-binary-ops': [severity, indentLevel],
     '@stylistic/key-spacing': [severity, { afterColon: true, beforeColon: false }],
     '@stylistic/keyword-spacing': [severity, { after: true, before: true }],
     '@stylistic/lines-between-class-members': [severity, 'always', { exceptAfterSingleLine: true }],

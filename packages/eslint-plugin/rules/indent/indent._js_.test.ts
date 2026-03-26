@@ -4,7 +4,6 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { $, run, skipBabel } from '#test'
 import { languageOptionsForBabelFlow } from '#test/parsers-flow'
-import tsParser from '@typescript-eslint/parser'
 import rule from './indent'
 
 const fixture = readFileSync(join(__dirname, './fixtures/indent-invalid-fixture-1.js'), 'utf8')
@@ -3158,7 +3157,7 @@ run<RuleOptions, MessageIds>({
       code: $`
         if (
             foo && bar ||
-            baz && qux // This line is ignored because BinaryExpressions are not checked.
+            baz && qux
         ) {
             qux();
         }
@@ -4232,24 +4231,6 @@ run<RuleOptions, MessageIds>({
     // Ignore Unknown Nodes
     // ----------------------------------------------------------------------
 
-    {
-      code: $`
-        type httpMethod = 'GET'
-          | 'POST'
-          | 'PUT';
-      `,
-      options: [2, { VariableDeclarator: 0 }],
-      parser: tsParser,
-    },
-    {
-      code: $`
-        type httpMethod = 'GET'
-        | 'POST'
-        | 'PUT';
-      `,
-      options: [2, { VariableDeclarator: 1 }],
-      parser: tsParser,
-    },
     $`
       foo(\`foo
               \`, {
@@ -9581,17 +9562,17 @@ run<RuleOptions, MessageIds>({
     {
       code: $`
         foo
-                || (
-                        bar
-                    )
+        || (
+                bar
+            )
       `,
       output: $`
         foo
-                || (
-                    bar
-                )
+        || (
+            bar
+        )
       `,
-      errors: expectedErrors([[3, 12, 16], [4, 8, 12]]),
+      errors: expectedErrors([[3, 4, 8], [4, 0, 4]]),
     },
     {
       code: $`
