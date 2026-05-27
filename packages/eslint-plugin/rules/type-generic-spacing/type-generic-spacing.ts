@@ -1,4 +1,4 @@
-import type { NodeTypes, Token, Tree } from '#types'
+import type { NodeTypes, Tree } from '#types'
 import type { MessageIds, RuleOptions } from './types'
 import { createRule } from '#utils/create-rule'
 
@@ -84,7 +84,7 @@ export default createRule<RuleOptions, MessageIds>({
   meta: {
     type: 'layout',
     docs: {
-      description: 'Enforces consistent spacing inside TypeScript type generics',
+      description: 'Enforces consistent spacing around TypeScript type generics',
     },
     fixable: 'whitespace',
     schema: [
@@ -165,59 +165,13 @@ export default createRule<RuleOptions, MessageIds>({
       checkAfter(node)
     }
 
-    function removeSpaceBetween(left: Token, right: Token) {
-      const textBetween = sourceCode.text.slice(left.range[1], right.range[0])
-
-      // raise error only if there is no newline
-      if (/\s/.test(textBetween) && !/^[\r\n]/.test(textBetween)) {
-        context.report({
-          loc: {
-            start: left.loc.end,
-            end: right.loc.start,
-          },
-          messageId: 'genericSpacingMismatch',
-          * fix(fixer) {
-            yield fixer.replaceTextRange([left.range[1], right.range[0]], '')
-          },
-        })
-      }
-    }
-
-    function checkBracketSpacing(openToken: Token | null, closeToken: Token | null) {
-      if (openToken) {
-        const firstToken = sourceCode.getTokenAfter(openToken)
-
-        if (firstToken) {
-          removeSpaceBetween(openToken, firstToken)
-        }
-      }
-
-      if (closeToken) {
-        const lastToken = sourceCode.getTokenBefore(closeToken)
-
-        if (lastToken) {
-          removeSpaceBetween(lastToken, closeToken)
-        }
-      }
-    }
-
     return {
       TSTypeParameterInstantiation: (node) => {
         checkSpacing(node)
-
-        const openToken = sourceCode.getTokenBefore(node.params[0])
-        const closeToken = sourceCode.getTokenAfter(node.params.at(-1)!)
-
-        checkBracketSpacing(openToken, closeToken)
       },
 
       TSTypeParameterDeclaration: (node) => {
         checkSpacing(node)
-
-        const openToken = sourceCode.getTokenBefore(node.params[0])
-        const closeToken = sourceCode.getTokenAfter(node.params.at(-1)!)
-
-        checkBracketSpacing(openToken, closeToken)
       },
     }
   },

@@ -3,15 +3,16 @@ related_rules:
   - type-annotation-spacing
   - space-infix-ops
   - space-before-function-paren
+  - list-style
 ---
 
 # type-generic-spacing
 
-Enforces consistent spacing inside TypeScript type generics.
+Enforces consistent spacing around TypeScript type generics.
 
 ## Rule Details
 
-This rule enforces consistent spacing inside TypeScript type generics.
+This rule enforces consistent spacing around TypeScript type generics (space before `<` and after `>`). For spacing inside the `<>` brackets, use the `list-style` rule.
 
 ## Options
 

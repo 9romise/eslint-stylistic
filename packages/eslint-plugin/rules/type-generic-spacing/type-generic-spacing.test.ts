@@ -64,17 +64,7 @@ run<RuleOptions, MessageIds>({
     'interface Foo extends Bar<T>{}',
   ],
   invalid: ([
-    ['const val: Set< string> = new Set()', 'const val: Set<string> = new Set()'],
-    ['const val: Array<  number > = []', 'const val: Array<number> = []', 2],
-    ['const val = callback< string  >(() => \'foo\')', 'const val = callback<string>(() => \'foo\')', 2],
-    ['type Foo< T> = T', 'type Foo<T> = T'],
-    ['type Foo<T > = T', 'type Foo<T> = T'],
-    ['type Foo< T > = T', 'type Foo<T> = T', 2],
-    ['function foo< T >() {}', 'function foo<T>() {}', 2],
-    ['type Foo< T = true    > = T', 'type Foo<T = true> = T', 2],
-    ['type Foo< T, K   > = T', 'type Foo<T, K> = T', 2],
     ['function foo <T>() {}', 'function foo<T>() {}'],
-    ['function foo< T >() {}', 'function foo<T>() {}', 2],
     [
       $`
         interface Log<T> {
@@ -91,24 +81,6 @@ run<RuleOptions, MessageIds>({
         }
       `,
       3,
-    ],
-    [
-      $`
-        interface Log {
-          foo<  T >(name: T): void
-        }
-      `,
-      $`
-        interface Log {
-          foo<T>(name: T): void
-        }
-      `,
-      2,
-    ],
-    [
-      'const toSortedImplementation = Array.prototype.toSorted || function <    T >(name: T): void {}',
-      'const toSortedImplementation = Array.prototype.toSorted || function <T>(name: T): void {}',
-      2,
     ],
   ] satisfies [string, string, number?][]).map(([code, output, errorLen = 1]) => ({
     code,
