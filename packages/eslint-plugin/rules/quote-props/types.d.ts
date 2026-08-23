@@ -2,13 +2,13 @@
 
 /* @checksum: _ZLcvo6X5vkWvnpwUR5rmsnxkBY3balwUPXKNdCPaqs */
 
-export type QuotePropsSchema0
-  = | []
-    | [
-      | 'always'
-      | 'as-needed'
-      | 'consistent'
-      | 'consistent-as-needed',
+export type QuotePropsSchema0 =
+  | []
+  | [
+    | 'always'
+    | 'as-needed'
+    | 'consistent'
+    | 'consistent-as-needed',
     ]
     | []
     | [
@@ -34,11 +34,11 @@ export type QuotePropsSchema0
 export type QuotePropsRuleOptions = QuotePropsSchema0
 
 export type RuleOptions = QuotePropsRuleOptions
-export type MessageIds
-  = | 'requireQuotesDueToReservedWord'
-    | 'inconsistentlyQuotedProperty'
-    | 'unnecessarilyQuotedProperty'
-    | 'unquotedReservedProperty'
-    | 'unquotedNumericProperty'
-    | 'unquotedPropertyFound'
-    | 'redundantQuoting'
+export type MessageIds =
+  | 'requireQuotesDueToReservedWord'
+  | 'inconsistentlyQuotedProperty'
+  | 'unnecessarilyQuotedProperty'
+  | 'unquotedReservedProperty'
+  | 'unquotedNumericProperty'
+  | 'unquotedPropertyFound'
+  | 'redundantQuoting'

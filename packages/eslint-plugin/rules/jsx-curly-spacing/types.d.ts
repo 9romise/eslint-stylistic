@@ -2,10 +2,10 @@
 
 /* @checksum: _pSba4lVI8bSVjFb0Xmp0h46hFdDbMk9iLr41NY4nwY */
 
-export type JsxCurlySpacingSchema0
-  = | []
-    | [
-      | {
+export type JsxCurlySpacingSchema0 =
+  | []
+  | [
+    | {
           when?: 'always' | 'never'
           allowMultiline?: boolean
           spacing?: {
@@ -19,7 +19,7 @@ export type JsxCurlySpacingSchema0
                   objectLiterals?: 'always' | 'never'
                 }
               }
-            | boolean
+              | boolean
           children?:
             | {
                 when?: 'always' | 'never'
@@ -28,9 +28,9 @@ export type JsxCurlySpacingSchema0
                   objectLiterals?: 'always' | 'never'
                 }
               }
-            | boolean
+              | boolean
         }
-      | ('always' | 'never'),
+        | ('always' | 'never'),
     ]
     | [
       (
@@ -48,7 +48,7 @@ export type JsxCurlySpacingSchema0
                     objectLiterals?: 'always' | 'never'
                   }
                 }
-              | boolean
+                | boolean
             children?:
               | {
                   when?: 'always' | 'never'
@@ -57,9 +57,9 @@ export type JsxCurlySpacingSchema0
                     objectLiterals?: 'always' | 'never'
                   }
                 }
-              | boolean
+                | boolean
           }
-        | ('always' | 'never')
+          | ('always' | 'never')
       ),
       {
         allowMultiline?: boolean
@@ -73,10 +73,10 @@ export type JsxCurlySpacingRuleOptions
   = JsxCurlySpacingSchema0
 
 export type RuleOptions = JsxCurlySpacingRuleOptions
-export type MessageIds
-  = | 'noNewlineAfter'
-    | 'noNewlineBefore'
-    | 'noSpaceAfter'
-    | 'noSpaceBefore'
-    | 'spaceNeededAfter'
-    | 'spaceNeededBefore'
+export type MessageIds =
+  | 'noNewlineAfter'
+  | 'noNewlineBefore'
+  | 'noSpaceAfter'
+  | 'noSpaceBefore'
+  | 'spaceNeededAfter'
+  | 'spaceNeededBefore'

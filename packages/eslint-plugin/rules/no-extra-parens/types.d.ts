@@ -2,12 +2,12 @@
 
 /* @checksum: 2VSYepVxLqTeE51mdYV-p0qvi6ZEDPecmYcm9KBzgd8 */
 
-export type NoExtraParensSchema0
-  = | []
-    | ['functions']
-    | []
-    | ['all']
-    | [
+export type NoExtraParensSchema0 =
+  | []
+  | ['functions']
+  | []
+  | ['all']
+  | [
       'all',
       {
         conditionalAssign?: boolean

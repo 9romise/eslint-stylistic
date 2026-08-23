@@ -53,7 +53,6 @@ export function customize(options: StylisticCustomizeOptions = {}): Linter.Confi
   ] = Array.isArray(indent) ? indent : [indent]
 
   let rules: Rules = {
-    '@stylistic/array-bracket-spacing': [severity, 'never'],
     '@stylistic/arrow-parens': [severity, arrowParens ? 'always' : 'as-needed', { requireForBlockBody: true }],
     '@stylistic/arrow-spacing': [severity, { after: true, before: true }],
     '@stylistic/block-spacing': [severity, blockSpacing ? 'always' : 'never'],
@@ -62,7 +61,7 @@ export function customize(options: StylisticCustomizeOptions = {}): Linter.Confi
     '@stylistic/comma-spacing': [severity, { after: true, before: false }],
     '@stylistic/comma-style': [severity, 'last'],
     '@stylistic/computed-property-spacing': [severity, 'never', { enforceForClassMembers: true }],
-    '@stylistic/dot-location': [severity, 'property'],
+    '@stylistic/dot-location': severity,
     '@stylistic/eol-last': severity,
     '@stylistic/generator-star-spacing': [severity, { after: true, before: false }],
     '@stylistic/indent': [severity, indentLevel, indentOptions],
@@ -70,6 +69,7 @@ export function customize(options: StylisticCustomizeOptions = {}): Linter.Confi
     '@stylistic/key-spacing': [severity, { afterColon: true, beforeColon: false }],
     '@stylistic/keyword-spacing': [severity, { after: true, before: true }],
     '@stylistic/lines-between-class-members': [severity, 'always', { exceptAfterSingleLine: true }],
+    '@stylistic/list-style': severity,
     '@stylistic/max-statements-per-line': [severity, { max: 1 }],
     '@stylistic/member-delimiter-style': [severity, {
       multiline: {
@@ -107,7 +107,6 @@ export function customize(options: StylisticCustomizeOptions = {}): Linter.Confi
     '@stylistic/no-tabs': indentLevel === 'tab' ? 'off' : severity,
     '@stylistic/no-trailing-spaces': severity,
     '@stylistic/no-whitespace-before-property': severity,
-    '@stylistic/object-curly-spacing': [severity, 'always'],
     '@stylistic/operator-linebreak': [severity, 'before'],
     '@stylistic/padded-blocks': [severity, { blocks: 'never', classes: 'never', switches: 'never' }],
     '@stylistic/quote-props': [severity, quoteProps],
@@ -182,16 +181,6 @@ export function customize(options: StylisticCustomizeOptions = {}): Linter.Confi
   if (enableExperimentalRules) {
     rules = {
       ...rules,
-      '@stylistic/array-bracket-newline': 'off',
-      '@stylistic/array-bracket-spacing': 'off',
-      '@stylistic/array-element-newline': 'off',
-      '@stylistic/exp-list-style': severity,
-      '@stylistic/function-call-argument-newline': 'off',
-      '@stylistic/function-paren-newline': 'off',
-      '@stylistic/indent-binary-ops': 'off',
-      '@stylistic/object-curly-newline': 'off',
-      '@stylistic/object-curly-spacing': 'off',
-      '@stylistic/object-property-newline': 'off',
       ...jsx
         ? {
             '@stylistic/exp-jsx-props-style': severity,

@@ -2,9 +2,9 @@
 
 /* @checksum: FXQzYFIdmMVSvv5IIEr2TDhzQftjPKqye03TYt7lymE */
 
-export type CurlyNewlineSchema0
-  = | ('always' | 'never')
-    | {
+export type CurlyNewlineSchema0 =
+  | ('always' | 'never')
+  | {
       IfStatementConsequent?:
         | ('always' | 'never')
         | {
@@ -160,8 +160,8 @@ export type CurlyNewlineSchema0
 export type CurlyNewlineRuleOptions = [CurlyNewlineSchema0?]
 
 export type RuleOptions = CurlyNewlineRuleOptions
-export type MessageIds
-  = | 'unexpectedLinebreakBeforeClosingBrace'
-    | 'unexpectedLinebreakAfterOpeningBrace'
-    | 'expectedLinebreakBeforeClosingBrace'
-    | 'expectedLinebreakAfterOpeningBrace'
+export type MessageIds =
+  | 'unexpectedLinebreakBeforeClosingBrace'
+  | 'unexpectedLinebreakAfterOpeningBrace'
+  | 'expectedLinebreakBeforeClosingBrace'
+  | 'expectedLinebreakAfterOpeningBrace'

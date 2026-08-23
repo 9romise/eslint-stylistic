@@ -30,6 +30,7 @@ This rule accepts an object option:
   - [`"maxItems"`](#maxitems): Maximum number of elements allowed before auto-fixing to multi-line
 - [`"multiLine"`](#multiline): Options for when the node is multi-line
   - [`"minItems"`](#minitems): Minimum number of elements allowed before auto-fixing to single-line
+- [`"empty"`](#empty): How spacing and line breaks are handled for empty structures
 - [`"overrides"`](#overrides): Override options based on bracket type or node type
 
 The default configuration of this rule is:
@@ -47,7 +48,7 @@ Examples of **incorrect** code for this rule with the `"always"` option:
 ::: incorrect
 
 ```ts
-/* eslint @stylistic/exp-list-style: ["error", { "singleLine": { "spacing": "always" } }] */
+/* eslint @stylistic/list-style: ["error", { "singleLine": { "spacing": "always" } }] */
 
 let foo = {a: 1, b: 2};
 let bar = [1, 2];
@@ -73,7 +74,7 @@ Examples of **correct** code for this rule with the `"always"` option:
 ::: correct
 
 ```ts
-/* eslint @stylistic/exp-list-style: ["error", { "singleLine": { "spacing": "always" } }] */
+/* eslint @stylistic/list-style: ["error", { "singleLine": { "spacing": "always" } }] */
 
 let foo = { a: 1, b: 2 };
 let bar = [ 1, 2 ];
@@ -101,7 +102,7 @@ Examples of **incorrect** code for this rule with the `"maxItems"` option:
 ::: incorrect
 
 ```ts
-/* eslint @stylistic/exp-list-style: ["error", { "singleLine": { "maxItems": 1 } }] */
+/* eslint @stylistic/list-style: ["error", { "singleLine": { "maxItems": 1 } }] */
 
 let foo = {a: 1, b: 2};
 let bar = [1, 2];
@@ -116,7 +117,7 @@ Examples of **correct** code for this rule with the `"maxItems"` option:
 ::: correct
 
 ```ts
-/* eslint @stylistic/exp-list-style: ["error", { "singleLine": { "maxItems": 1 } }] */
+/* eslint @stylistic/list-style: ["error", { "singleLine": { "maxItems": 1 } }] */
 
 let foo = {
   a: 1,
@@ -147,7 +148,7 @@ Examples of **incorrect** code for this rule with the `"minItems"` option:
 ::: incorrect
 
 ```ts
-/* eslint @stylistic/exp-list-style: ["error", { "multiLine": { "minItems": 3 } }] */
+/* eslint @stylistic/list-style: ["error", { "multiLine": { "minItems": 3 } }] */
 
 let foo = {
   a: 1,
@@ -174,7 +175,7 @@ Examples of **correct** code for this rule with the `"minItems"` option:
 ::: correct
 
 ```ts
-/* eslint @stylistic/exp-list-style: ["error", { "multiLine": { "minItems": 1 } }] */
+/* eslint @stylistic/list-style: ["error", { "multiLine": { "minItems": 1 } }] */
 
 let foo = {
   a: 1,
@@ -196,6 +197,67 @@ let [
 
 :::
 
+### empty
+
+`"ignore"` (default) does not check empty structures. `"always"` requires a space inside an empty structure, while `"never"` disallows spaces. When enabled, empty multiline structures count as having zero items, so `multiLine.minItems` controls whether they collapse to a single line.
+
+Examples of **correct** code with the default `"ignore"` option:
+
+::: correct
+
+```ts
+/* eslint @stylistic/exp-list-style: ["error", { "empty": "ignore" }] */
+
+const array = [ ]
+const object = {}
+foo( )
+```
+
+:::
+
+Examples of **correct** code with the `"always"` option:
+
+::: correct
+
+```ts
+/* eslint @stylistic/exp-list-style: ["error", { "empty": "always" }] */
+
+const array = [ ]
+const object = { }
+foo( )
+```
+
+:::
+
+Examples of **incorrect** code with the `"never"` option and `multiLine.minItems` set to `1`:
+
+::: incorrect
+
+```ts
+/* eslint @stylistic/exp-list-style: ["error", { "empty": "never", "multiLine": { "minItems": 1 } }] */
+
+const array = [ ]
+const object = {
+}
+foo( )
+```
+
+:::
+
+Examples of **correct** code with the `"never"` option and `multiLine.minItems` set to `1`:
+
+::: correct
+
+```ts
+/* eslint @stylistic/exp-list-style: ["error", { "empty": "never", "multiLine": { "minItems": 1 } }] */
+
+const array = []
+const object = {}
+foo()
+```
+
+:::
+
 ### overrides
 
 You can specify different options for specific bracket types:
@@ -210,7 +272,7 @@ Examples of correct code for this rule with the "overrides" option specified for
 ::: correct
 
 ```js
-/* eslint @stylistic/exp-list-style: ["error", { "overrides": { "{}": { "singleLine": { "spacing": "always" } } } }] */
+/* eslint @stylistic/list-style: ["error", { "overrides": { "{}": { "singleLine": { "spacing": "always" } } } }] */
 
 let foo = { a: 1 };
 let bar = [1];
@@ -251,7 +313,7 @@ Example of node-specific override:
 ::: correct
 
 ```js
-/* eslint @stylistic/exp-list-style: ["error", {
+/* eslint @stylistic/list-style: ["error", {
   "overrides": {
     "ImportAttributes": { "singleLine": { "spacing": "never" } },
   }
@@ -272,7 +334,7 @@ You can also set an override to `"off"` to disable checking for a specific brack
 ::: correct
 
 ```js
-/* eslint @stylistic/exp-list-style: ["error", {
+/* eslint @stylistic/list-style: ["error", {
   "overrides": {
     "IfStatement": "off",
   }

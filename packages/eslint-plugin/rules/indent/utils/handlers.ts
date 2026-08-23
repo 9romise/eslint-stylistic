@@ -25,7 +25,11 @@ import {
   STATEMENT_LIST_PARENTS,
 } from '#utils/ast'
 
-type ElementListOffset = 'first' | 'off' | number
+type IndentOptions = NonNullable<RuleOptions[1]>
+type BaseIndentConfig = {
+  [K in keyof IndentOptions]-?: Required<NonNullable<IndentOptions[K]>>
+}
+type ElementListOffset = NonNullable<IndentOptions['ArrayExpression']>
 
 const isBinaryExpressionNode = isNodeOfTypes([
   AST_NODE_TYPES.BinaryExpression,
@@ -38,30 +42,8 @@ interface BinaryTypeContinuation {
   rightToken: Token
 }
 
-export interface IndentConfig {
-  SwitchCase: number
-  VariableDeclarator: {
-    var: number | 'first'
-    let: number | 'first'
-    const: number | 'first'
-    using: number | 'first'
-  }
-  outerIIFEBody: number | 'off'
-  assignmentOperator: number | 'off'
-  FunctionDeclaration: { parameters: number | 'first' | 'off', body: number, returnType: number }
-  FunctionExpression: { parameters: number | 'first' | 'off', body: number, returnType: number }
-  StaticBlock: { body: number }
-  CallExpression: { arguments: number | 'first' | 'off' }
-  MemberExpression: number | 'off'
-  ArrayExpression: number | 'first' | 'off'
-  ObjectExpression: number | 'first' | 'off'
-  ImportDeclaration: number | 'first' | 'off'
-  flatTernaryExpressions: boolean
-  ignoredNodes: string[]
-  ignoreComments: boolean
-  offsetTernaryExpressions: NonNullable<RuleOptions[1]>['offsetTernaryExpressions']
-  tabLength: number
-  binaryOps: number | 'off'
+export type IndentConfig = BaseIndentConfig & {
+  VariableDeclarator: Required<Extract<IndentOptions['VariableDeclarator'], object>>
 }
 
 export interface IndentContext {
@@ -418,9 +400,19 @@ export function checkConditionalNode(
   if (options.flatTernaryExpressions && isTokenOnSameLine(test, consequent) && !isOnFirstLineOfStatement(firstToken, node))
     return
 
+  // A conditional type chained in the alternate of another conditional type
+  // and written compactly (`test ? consequent` on one line) is a single
+  // continuation level. Its `?:` align with the enclosing chain rather than
+  // indenting further, matching how dprint formats unions of conditional types.
+  const alignsWithEnclosingConditionalTypeChain
+    = node.type === AST_NODE_TYPES.TSConditionalType
+      && node.parent.type === AST_NODE_TYPES.TSConditionalType
+      && node.parent.falseType === node
+      && isTokenOnSameLine(test, consequent)
+
   function checkBranch(branch: ASTNode, branchFirstToken: Token) {
-    let offset = 1
-    if (ternaryOptions) {
+    let offset = alignsWithEnclosingConditionalTypeChain ? 0 : 1
+    if (!alignsWithEnclosingConditionalTypeChain && ternaryOptions) {
       const branchType = skipChainExpression(branch).type
 
       if (branchFirstToken.type === 'Punctuator' || ternaryOptions[branchType]) {
@@ -442,8 +434,9 @@ export function checkConditionalNode(
   const lastConsequentToken = sourceCode.getTokenBefore(colonToken)!
   const firstAlternateToken = sourceCode.getTokenAfter(colonToken)!
 
-  offsets.setDesiredOffset(questionMarkToken, firstToken, 1)
-  offsets.setDesiredOffset(colonToken, firstToken, 1)
+  const operatorOffset = alignsWithEnclosingConditionalTypeChain ? 0 : 1
+  offsets.setDesiredOffset(questionMarkToken, firstToken, operatorOffset)
+  offsets.setDesiredOffset(colonToken, firstToken, operatorOffset)
 
   checkBranch(consequent, firstConsequentToken)
 

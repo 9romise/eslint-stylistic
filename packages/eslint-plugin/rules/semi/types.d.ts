@@ -2,10 +2,10 @@
 
 /* @checksum: Xqp7M5FZy9k-iDnbExvuvaMe9_lIwgK5sx-hNcf3Tdk */
 
-export type SemiSchema0
-  = | []
-    | ['never']
-    | [
+export type SemiSchema0 =
+  | []
+  | ['never']
+  | [
       'never',
       {
         beforeStatementContinuationChars?:

@@ -2,11 +2,11 @@
 
 /* @checksum: VHP0Hfjl83aHxTkqUSDkQX0JRqc88wY3GCFUKNpaObg */
 
-export type CommaDangleSchema0
-  = | []
-    | [
-      | Value
-      | {
+export type CommaDangleSchema0 =
+  | []
+  | [
+    | Value
+    | {
           arrays?: ValueWithIgnore
           objects?: ValueWithIgnore
           imports?: ValueWithIgnore
@@ -19,17 +19,17 @@ export type CommaDangleSchema0
           tuples?: ValueWithIgnore
         },
     ]
-export type Value
-  = | 'always-multiline'
-    | 'always'
-    | 'never'
-    | 'only-multiline'
-export type ValueWithIgnore
-  = | 'always-multiline'
-    | 'always'
-    | 'never'
-    | 'only-multiline'
-    | 'ignore'
+export type Value =
+  | 'always-multiline'
+  | 'always'
+  | 'never'
+  | 'only-multiline'
+export type ValueWithIgnore =
+  | 'always-multiline'
+  | 'always'
+  | 'never'
+  | 'only-multiline'
+  | 'ignore'
 
 export type CommaDangleRuleOptions = CommaDangleSchema0
 

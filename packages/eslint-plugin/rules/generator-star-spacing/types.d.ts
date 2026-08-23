@@ -2,9 +2,9 @@
 
 /* @checksum: CiweQ-8RN3GU-sTWp1BoBLA8LObnPfuHw6VO5-4-zj8 */
 
-export type GeneratorStarSpacingSchema0
-  = | ('before' | 'after' | 'both' | 'neither')
-    | {
+export type GeneratorStarSpacingSchema0 =
+  | ('before' | 'after' | 'both' | 'neither')
+  | {
       before?: boolean
       after?: boolean
       named?:
@@ -38,8 +38,8 @@ export type GeneratorStarSpacingRuleOptions = [
 ]
 
 export type RuleOptions = GeneratorStarSpacingRuleOptions
-export type MessageIds
-  = | 'missingBefore'
-    | 'missingAfter'
-    | 'unexpectedBefore'
-    | 'unexpectedAfter'
+export type MessageIds =
+  | 'missingBefore'
+  | 'missingAfter'
+  | 'unexpectedBefore'
+  | 'unexpectedAfter'
