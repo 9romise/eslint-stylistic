@@ -6,23 +6,23 @@ export type SemiSchema0 =
   | []
   | ['never']
   | [
-      'never',
-      {
-        beforeStatementContinuationChars?:
-          | 'always'
-          | 'any'
-          | 'never'
-      },
-    ]
-    | []
-    | ['always']
-    | [
-      'always',
-      {
-        omitLastInOneLineBlock?: boolean
-        omitLastInOneLineClassBody?: boolean
-      },
-    ]
+    'never',
+    {
+      beforeStatementContinuationChars?:
+        | 'always'
+        | 'any'
+        | 'never'
+    },
+  ]
+  | []
+  | ['always']
+  | [
+    'always',
+    {
+      omitLastInOneLineBlock?: boolean
+      omitLastInOneLineClassBody?: boolean
+    },
+  ]
 
 export type SemiRuleOptions = SemiSchema0
 

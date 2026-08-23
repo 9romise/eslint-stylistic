@@ -34,7 +34,6 @@ export function customize(options: StylisticCustomizeOptions = {}): Linter.Confi
     indentLevel = 2,
     indentOptions = {
       ArrayExpression: 1,
-      binaryOps: enableExperimentalRules ? 1 : 'off',
       CallExpression: { arguments: 1 },
       flatTernaryExpressions: false,
       FunctionDeclaration: { body: 1, parameters: 1, returnType: 1 },
@@ -65,7 +64,6 @@ export function customize(options: StylisticCustomizeOptions = {}): Linter.Confi
     '@stylistic/eol-last': severity,
     '@stylistic/generator-star-spacing': [severity, { after: true, before: false }],
     '@stylistic/indent': [severity, indentLevel, indentOptions],
-    '@stylistic/indent-binary-ops': [severity, indentLevel],
     '@stylistic/key-spacing': [severity, { afterColon: true, beforeColon: false }],
     '@stylistic/keyword-spacing': [severity, { after: true, before: true }],
     '@stylistic/lines-between-class-members': [severity, 'always', { exceptAfterSingleLine: true }],

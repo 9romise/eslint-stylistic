@@ -26,7 +26,6 @@ import {
   checkMemberExpression,
   checkObjectLikeNode,
   checkOperatorToken,
-  ignoreBinaryTypeIndent,
   ignoreNode,
 } from './utils/handlers'
 import { OffsetStorage } from './utils/offset-storage'
@@ -257,18 +256,6 @@ export default createRule<RuleOptions, MessageIds>({
             ],
           },
           assignmentOperator: {
-            oneOf: [
-              {
-                type: 'integer',
-                minimum: 0,
-              },
-              {
-                type: 'string',
-                enum: ['off'],
-              },
-            ],
-          },
-          binaryOps: {
             oneOf: [
               {
                 type: 'integer',
@@ -576,17 +563,11 @@ export default createRule<RuleOptions, MessageIds>({
       },
 
       BinaryExpression(node) {
-        if (options.binaryOps === 'off')
-          checkOperatorToken(ctx, node.left, node.right, node.operator)
-        else
-          checkBinaryExpressionIndent(ctx, node)
+        checkBinaryExpressionIndent(ctx, node)
       },
 
       LogicalExpression(node) {
-        if (options.binaryOps === 'off')
-          checkOperatorToken(ctx, node.left, node.right, node.operator)
-        else
-          checkBinaryExpressionIndent(ctx, node)
+        checkBinaryExpressionIndent(ctx, node)
       },
 
       'BlockStatement': node => checkBlockLikeNode(ctx, node),
@@ -1151,17 +1132,11 @@ export default createRule<RuleOptions, MessageIds>({
       'TSAsExpression': node => checkOperatorToken(ctx, node.expression, node.typeAnnotation, 'as'),
 
       'TSIntersectionType:exit': function (node) {
-        if (options.binaryOps === 'off')
-          ignoreBinaryTypeIndent(ctx, node, '&')
-        else
-          checkBinaryTypeIndent(ctx, node, '&')
+        checkBinaryTypeIndent(ctx, node, '&')
       },
 
       'TSUnionType:exit': function (node) {
-        if (options.binaryOps === 'off')
-          ignoreBinaryTypeIndent(ctx, node, '|')
-        else
-          checkBinaryTypeIndent(ctx, node, '|')
+        checkBinaryTypeIndent(ctx, node, '|')
       },
 
       // TODO: TSSatisfiesExpression

@@ -8,12 +8,12 @@ export type MultilineCommentStyleSchema0 =
   | []
   | ['separate-lines']
   | [
-      'separate-lines',
-      {
-        checkJSDoc?: boolean
-        checkExclamation?: boolean
-      },
-    ]
+    'separate-lines',
+    {
+      checkJSDoc?: boolean
+      checkExclamation?: boolean
+    },
+  ]
 
 export type MultilineCommentStyleRuleOptions
   = MultilineCommentStyleSchema0

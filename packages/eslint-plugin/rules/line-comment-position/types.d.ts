@@ -5,10 +5,10 @@
 export type LineCommentPositionSchema0 =
   | ('above' | 'beside')
   | {
-      position?: 'above' | 'beside'
-      ignorePattern?: string
-      applyDefaultIgnorePatterns?: boolean
-    }
+    position?: 'above' | 'beside'
+    ignorePattern?: string
+    applyDefaultIgnorePatterns?: boolean
+  }
 
 export type LineCommentPositionRuleOptions = [
   LineCommentPositionSchema0?,

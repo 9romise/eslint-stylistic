@@ -9,27 +9,27 @@ export type QuotePropsSchema0 =
     | 'as-needed'
     | 'consistent'
     | 'consistent-as-needed',
-    ]
-    | []
-    | [
+  ]
+  | []
+  | [
+    | 'always'
+    | 'as-needed'
+    | 'consistent'
+    | 'consistent-as-needed',
+  ]
+  | [
+    (
       | 'always'
       | 'as-needed'
       | 'consistent'
-      | 'consistent-as-needed',
-    ]
-    | [
-      (
-        | 'always'
-        | 'as-needed'
-        | 'consistent'
-        | 'consistent-as-needed'
-      ),
-      {
-        keywords?: boolean
-        unnecessary?: boolean
-        numbers?: boolean
-      },
-    ]
+      | 'consistent-as-needed'
+    ),
+    {
+      keywords?: boolean
+      unnecessary?: boolean
+      numbers?: boolean
+    },
+  ]
 
 export type QuotePropsRuleOptions = QuotePropsSchema0
 

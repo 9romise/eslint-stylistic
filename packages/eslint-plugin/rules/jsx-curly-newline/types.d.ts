@@ -5,9 +5,9 @@
 export type JsxCurlyNewlineSchema0 =
   | ('consistent' | 'never')
   | {
-      singleline?: 'consistent' | 'require' | 'forbid'
-      multiline?: 'consistent' | 'require' | 'forbid'
-    }
+    singleline?: 'consistent' | 'require' | 'forbid'
+    multiline?: 'consistent' | 'require' | 'forbid'
+  }
 
 export type JsxCurlyNewlineRuleOptions = [
   JsxCurlyNewlineSchema0?,

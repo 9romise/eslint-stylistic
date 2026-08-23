@@ -8,31 +8,31 @@ export type NoExtraParensSchema0 =
   | []
   | ['all']
   | [
-      'all',
-      {
-        conditionalAssign?: boolean
-        ternaryOperandBinaryExpressions?: boolean
-        nestedBinaryExpressions?: boolean
-        returnAssign?: boolean
-        ignoreJSX?:
-          | 'none'
-          | 'all'
-          | 'single-line'
-          | 'multi-line'
-        enforceForArrowConditionals?: boolean
-        enforceForSequenceExpressions?: boolean
-        enforceForNewInMemberExpressions?: boolean
-        enforceForFunctionPrototypeMethods?: boolean
-        allowParensAfterCommentPattern?: string
-        nestedConditionalExpressions?: boolean
-        allowNodesInSpreadElement?: {
-          ConditionalExpression?: boolean
-          LogicalExpression?: boolean
-          AwaitExpression?: boolean
-        }
-        ignoredNodes?: string[]
-      },
-    ]
+    'all',
+    {
+      conditionalAssign?: boolean
+      ternaryOperandBinaryExpressions?: boolean
+      nestedBinaryExpressions?: boolean
+      returnAssign?: boolean
+      ignoreJSX?:
+        | 'none'
+        | 'all'
+        | 'single-line'
+        | 'multi-line'
+      enforceForArrowConditionals?: boolean
+      enforceForSequenceExpressions?: boolean
+      enforceForNewInMemberExpressions?: boolean
+      enforceForFunctionPrototypeMethods?: boolean
+      allowParensAfterCommentPattern?: string
+      nestedConditionalExpressions?: boolean
+      allowNodesInSpreadElement?: {
+        ConditionalExpression?: boolean
+        LogicalExpression?: boolean
+        AwaitExpression?: boolean
+      }
+      ignoredNodes?: string[]
+    },
+  ]
 
 export type NoExtraParensRuleOptions = NoExtraParensSchema0
 

@@ -1,6 +1,6 @@
 /* GENERATED, DO NOT EDIT DIRECTLY */
 
-/* @checksum: 9eW2NRlZWJN69WyTE7_r-BqO6A-Dy06ubqtAhHYKHco */
+/* @checksum: YDN3bipCxLbi2wbT3RWu6jn4-qnI-TofUsH_Va73Pro */
 
 export type IndentSchema0 = 'tab' | number
 
@@ -9,13 +9,12 @@ export interface IndentSchema1 {
   VariableDeclarator?:
     | (number | ('first' | 'off'))
     | {
-        var?: number | ('first' | 'off')
-        let?: number | ('first' | 'off')
-        const?: number | ('first' | 'off')
-        using?: number | ('first' | 'off')
-      }
+      var?: number | ('first' | 'off')
+      let?: number | ('first' | 'off')
+      const?: number | ('first' | 'off')
+      using?: number | ('first' | 'off')
+    }
   assignmentOperator?: number | 'off'
-  binaryOps?: number | 'off'
   outerIIFEBody?: number | 'off'
   MemberExpression?: number | 'off'
   FunctionDeclaration?: {
@@ -41,10 +40,10 @@ export interface IndentSchema1 {
   offsetTernaryExpressions?:
     | boolean
     | {
-        CallExpression?: boolean
-        AwaitExpression?: boolean
-        NewExpression?: boolean
-      }
+      CallExpression?: boolean
+      AwaitExpression?: boolean
+      NewExpression?: boolean
+    }
   ignoredNodes?: string[]
   ignoreComments?: boolean
   tabLength?: number

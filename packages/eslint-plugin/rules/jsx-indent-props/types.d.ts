@@ -6,9 +6,9 @@ export type JsxIndentPropsSchema0 =
   | ('tab' | 'first')
   | number
   | {
-      indentMode?: ('tab' | 'first') | number
-      ignoreTernaryOperator?: boolean
-    }
+    indentMode?: ('tab' | 'first') | number
+    ignoreTernaryOperator?: boolean
+  }
 
 export type JsxIndentPropsRuleOptions = [
   JsxIndentPropsSchema0?,

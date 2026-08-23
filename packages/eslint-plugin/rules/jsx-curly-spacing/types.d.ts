@@ -6,68 +6,68 @@ export type JsxCurlySpacingSchema0 =
   | []
   | [
     | {
+      when?: 'always' | 'never'
+      allowMultiline?: boolean
+      spacing?: {
+        objectLiterals?: 'always' | 'never'
+      }
+      attributes?:
+        | {
           when?: 'always' | 'never'
           allowMultiline?: boolean
           spacing?: {
             objectLiterals?: 'always' | 'never'
           }
-          attributes?:
-            | {
-                when?: 'always' | 'never'
-                allowMultiline?: boolean
-                spacing?: {
-                  objectLiterals?: 'always' | 'never'
-                }
-              }
-              | boolean
-          children?:
-            | {
-                when?: 'always' | 'never'
-                allowMultiline?: boolean
-                spacing?: {
-                  objectLiterals?: 'always' | 'never'
-                }
-              }
-              | boolean
         }
-        | ('always' | 'never'),
-    ]
-    | [
-      (
+        | boolean
+      children?:
         | {
+          when?: 'always' | 'never'
+          allowMultiline?: boolean
+          spacing?: {
+            objectLiterals?: 'always' | 'never'
+          }
+        }
+        | boolean
+    }
+    | ('always' | 'never'),
+  ]
+  | [
+    (
+      | {
+        when?: 'always' | 'never'
+        allowMultiline?: boolean
+        spacing?: {
+          objectLiterals?: 'always' | 'never'
+        }
+        attributes?:
+          | {
             when?: 'always' | 'never'
             allowMultiline?: boolean
             spacing?: {
               objectLiterals?: 'always' | 'never'
             }
-            attributes?:
-              | {
-                  when?: 'always' | 'never'
-                  allowMultiline?: boolean
-                  spacing?: {
-                    objectLiterals?: 'always' | 'never'
-                  }
-                }
-                | boolean
-            children?:
-              | {
-                  when?: 'always' | 'never'
-                  allowMultiline?: boolean
-                  spacing?: {
-                    objectLiterals?: 'always' | 'never'
-                  }
-                }
-                | boolean
           }
-          | ('always' | 'never')
-      ),
-      {
-        allowMultiline?: boolean
-        spacing?: {
-          objectLiterals?: 'always' | 'never'
-        }
-      },
-    ]
+          | boolean
+        children?:
+          | {
+            when?: 'always' | 'never'
+            allowMultiline?: boolean
+            spacing?: {
+              objectLiterals?: 'always' | 'never'
+            }
+          }
+          | boolean
+      }
+      | ('always' | 'never')
+    ),
+    {
+      allowMultiline?: boolean
+      spacing?: {
+        objectLiterals?: 'always' | 'never'
+      }
+    },
+  ]
 
 export type JsxCurlySpacingRuleOptions
   = JsxCurlySpacingSchema0

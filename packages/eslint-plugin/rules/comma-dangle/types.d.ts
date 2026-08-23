@@ -7,18 +7,18 @@ export type CommaDangleSchema0 =
   | [
     | Value
     | {
-          arrays?: ValueWithIgnore
-          objects?: ValueWithIgnore
-          imports?: ValueWithIgnore
-          exports?: ValueWithIgnore
-          functions?: ValueWithIgnore
-          importAttributes?: ValueWithIgnore
-          dynamicImports?: ValueWithIgnore
-          enums?: ValueWithIgnore
-          generics?: ValueWithIgnore
-          tuples?: ValueWithIgnore
-        },
-    ]
+      arrays?: ValueWithIgnore
+      objects?: ValueWithIgnore
+      imports?: ValueWithIgnore
+      exports?: ValueWithIgnore
+      functions?: ValueWithIgnore
+      importAttributes?: ValueWithIgnore
+      dynamicImports?: ValueWithIgnore
+      enums?: ValueWithIgnore
+      generics?: ValueWithIgnore
+      tuples?: ValueWithIgnore
+    },
+  ]
 export type Value =
   | 'always-multiline'
   | 'always'

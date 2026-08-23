@@ -5,9 +5,9 @@
 export type YieldStarSpacingSchema0 =
   | ('before' | 'after' | 'both' | 'neither')
   | {
-      before?: boolean
-      after?: boolean
-    }
+    before?: boolean
+    after?: boolean
+  }
 
 export type YieldStarSpacingRuleOptions = [
   YieldStarSpacingSchema0?,

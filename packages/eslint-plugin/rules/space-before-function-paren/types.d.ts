@@ -5,11 +5,11 @@
 export type SpaceBeforeFunctionParenSchema0 =
   | ('always' | 'never')
   | {
-      anonymous?: 'always' | 'never' | 'ignore'
-      named?: 'always' | 'never' | 'ignore'
-      asyncArrow?: 'always' | 'never' | 'ignore'
-      catch?: 'always' | 'never' | 'ignore'
-    }
+    anonymous?: 'always' | 'never' | 'ignore'
+    named?: 'always' | 'never' | 'ignore'
+    asyncArrow?: 'always' | 'never' | 'ignore'
+    catch?: 'always' | 'never' | 'ignore'
+  }
 
 export type SpaceBeforeFunctionParenRuleOptions = [
   SpaceBeforeFunctionParenSchema0?,

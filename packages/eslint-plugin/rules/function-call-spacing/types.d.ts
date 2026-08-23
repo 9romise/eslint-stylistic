@@ -8,15 +8,15 @@ export type FunctionCallSpacingSchema0 =
   | []
   | ['always']
   | [
-      'always',
-      {
-        allowNewlines?: boolean
-        optionalChain?: {
-          before?: boolean
-          after?: boolean
-        }
-      },
-    ]
+    'always',
+    {
+      allowNewlines?: boolean
+      optionalChain?: {
+        before?: boolean
+        after?: boolean
+      }
+    },
+  ]
 
 export type FunctionCallSpacingRuleOptions
   = FunctionCallSpacingSchema0

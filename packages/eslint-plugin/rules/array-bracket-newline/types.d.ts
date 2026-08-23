@@ -5,9 +5,9 @@
 export type ArrayBracketNewlineSchema0 =
   | ('always' | 'never' | 'consistent')
   | {
-      multiline?: boolean
-      minItems?: number | null
-    }
+    multiline?: boolean
+    minItems?: number | null
+  }
 
 export type ArrayBracketNewlineRuleOptions = [
   ArrayBracketNewlineSchema0?,
