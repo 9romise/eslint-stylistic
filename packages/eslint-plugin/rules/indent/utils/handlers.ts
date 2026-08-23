@@ -36,12 +36,6 @@ const isBinaryExpressionNode = isNodeOfTypes([
   AST_NODE_TYPES.LogicalExpression,
 ])
 
-interface BinaryTypeContinuation {
-  leftToken: Token
-  operatorToken: Token
-  rightToken: Token
-}
-
 export type IndentConfig = BaseIndentConfig & {
   VariableDeclarator: Required<Extract<IndentOptions['VariableDeclarator'], object>>
 }
@@ -559,24 +553,9 @@ export function checkBinaryTypeIndent(
   if (isSingleLine(node))
     return
 
-  const continuations = getBinaryTypeContinuations(ctx, node, operator)
-
   const firstToken = sourceCode.getFirstToken(node)!
   const rootAnchorToken = tokenInfo.getFirstTokenOfLine(firstToken)!
   const rootOffset = tokenInfo.isFirstTokenOfLine(firstToken) ? 0 : 1
-
-  for (const { leftToken, operatorToken, rightToken } of continuations) {
-    addBinaryContinuationIndent(ctx, operatorToken, leftToken, rightToken, rootAnchorToken, rootOffset)
-  }
-}
-
-function getBinaryTypeContinuations(
-  ctx: IndentContext,
-  node: Tree.TSIntersectionType | Tree.TSUnionType,
-  operator: '&' | '|',
-) {
-  const { sourceCode } = ctx
-  const continuations: BinaryTypeContinuation[] = []
 
   for (const typeNode of node.types) {
     const operatorToken = sourceCode.getTokenBefore(typeNode)
@@ -584,14 +563,15 @@ function getBinaryTypeContinuations(
     if (!operatorToken || operatorToken.value !== operator || operatorToken.range[0] < node.range[0])
       continue
 
-    continuations.push({
-      leftToken: sourceCode.getTokenBefore(operatorToken)!,
+    addBinaryContinuationIndent(
+      ctx,
       operatorToken,
-      rightToken: sourceCode.getTokenAfter(operatorToken)!,
-    })
+      sourceCode.getTokenBefore(operatorToken)!,
+      sourceCode.getTokenAfter(operatorToken)!,
+      rootAnchorToken,
+      rootOffset,
+    )
   }
-
-  return continuations
 }
 
 /**
