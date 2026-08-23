@@ -12,56 +12,56 @@ export type ObjectCurlyNewlineSchema0 =
     }
     )
     | {
-    ObjectExpression?:
-      | ('always' | 'never')
-      | {
-        multiline?: boolean
-        minProperties?: number
-        consistent?: boolean
-      }
-    ObjectPattern?:
-      | ('always' | 'never')
-      | {
-        multiline?: boolean
-        minProperties?: number
-        consistent?: boolean
-      }
-    ImportDeclaration?:
-      | ('always' | 'never')
-      | {
-        multiline?: boolean
-        minProperties?: number
-        consistent?: boolean
-      }
-    ExportDeclaration?:
-      | ('always' | 'never')
-      | {
-        multiline?: boolean
-        minProperties?: number
-        consistent?: boolean
-      }
-    TSTypeLiteral?:
-      | ('always' | 'never')
-      | {
-        multiline?: boolean
-        minProperties?: number
-        consistent?: boolean
-      }
-    TSInterfaceBody?:
-      | ('always' | 'never')
-      | {
-        multiline?: boolean
-        minProperties?: number
-        consistent?: boolean
-      }
-    TSEnumBody?:
-      | ('always' | 'never')
-      | {
-        multiline?: boolean
-        minProperties?: number
-        consistent?: boolean
-      }
-  }
+      ObjectExpression?:
+        | ('always' | 'never')
+        | {
+          multiline?: boolean
+          minProperties?: number
+          consistent?: boolean
+        }
+      ObjectPattern?:
+        | ('always' | 'never')
+        | {
+          multiline?: boolean
+          minProperties?: number
+          consistent?: boolean
+        }
+      ImportDeclaration?:
+        | ('always' | 'never')
+        | {
+          multiline?: boolean
+          minProperties?: number
+          consistent?: boolean
+        }
+      ExportDeclaration?:
+        | ('always' | 'never')
+        | {
+          multiline?: boolean
+          minProperties?: number
+          consistent?: boolean
+        }
+      TSTypeLiteral?:
+        | ('always' | 'never')
+        | {
+          multiline?: boolean
+          minProperties?: number
+          consistent?: boolean
+        }
+      TSInterfaceBody?:
+        | ('always' | 'never')
+        | {
+          multiline?: boolean
+          minProperties?: number
+          consistent?: boolean
+        }
+      TSEnumBody?:
+        | ('always' | 'never')
+        | {
+          multiline?: boolean
+          minProperties?: number
+          consistent?: boolean
+        }
+    }
 
 export type ObjectCurlyNewlineRuleOptions = [
   ObjectCurlyNewlineSchema0?,

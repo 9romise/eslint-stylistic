@@ -24,7 +24,7 @@ export type KeySpacingSchema0 =
       | 'TSTypeLiteral'
       | 'TSInterfaceBody'
       | 'ClassBody'
-                   )[]
+    )[]
   }
   | {
     singleLine?: {

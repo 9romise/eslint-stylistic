@@ -560,17 +560,19 @@ export function checkBinaryTypeIndent(
     return
 
   const continuations = getBinaryTypeContinuations(ctx, node, operator)
-  const parenStack: Token[] = []
 
-  for (const token of sourceCode.getTokens(node)) {
-    if (isOpeningParenToken(token)) {
-      parenStack.push(token)
-    }
-    else if (isClosingParenToken(token)) {
-      const openingParen = parenStack.pop()
+  for (const typeNode of node.types) {
+    let firstToken = sourceCode.getFirstToken(typeNode)!
+    let lastToken = sourceCode.getLastToken(typeNode)!
+    let openingParen = sourceCode.getTokenBefore(firstToken)
+    let closingParen = sourceCode.getTokenAfter(lastToken)
 
-      if (openingParen)
-        offsets.matchOffsetOf(openingParen, token)
+    while (openingParen && closingParen && isOpeningParenToken(openingParen) && isClosingParenToken(closingParen)) {
+      offsets.matchOffsetOf(openingParen, closingParen)
+      firstToken = openingParen
+      lastToken = closingParen
+      openingParen = sourceCode.getTokenBefore(firstToken)
+      closingParen = sourceCode.getTokenAfter(lastToken)
     }
   }
 
@@ -585,18 +587,12 @@ export function checkBinaryTypeIndent(
         || isClosingBracketToken(leftToken)
         || isClosingParenToken(leftToken)
       )
-    if (isTokenOnSameLine(leftToken, rightToken))
-      continue
-
     const anchorToken = followsMultilineDelimitedType
       ? tokenInfo.getFirstTokenOfLine(leftToken)!
       : rootAnchorToken
     const offset = followsMultilineDelimitedType ? 0 : rootOffset
 
-    if (tokenInfo.isFirstTokenOfLine(operatorToken))
-      offsets.setDesiredOffset(operatorToken, anchorToken, offset)
-    else
-      offsets.setDesiredOffset(rightToken, anchorToken, offset)
+    addBinaryContinuationIndent(ctx, operatorToken, leftToken, rightToken, anchorToken, offset)
   }
 }
 

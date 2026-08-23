@@ -74,6 +74,26 @@ run<RuleOptions, MessageIds>({
             | false
       `,
       $`
+        type Nested =
+          | (
+            | A
+            | B
+            )
+            | {
+              value: C
+            }
+      `,
+      $`
+        type Options =
+          | {
+            ignoredNodes?: (
+              | A
+              | B
+            )[]
+          }
+          | false
+      `,
+      $`
         type a = {
           [K in keyof T]: T[K] extends Date
             ? Date | string
