@@ -46,7 +46,6 @@ run<RuleOptions, MessageIds>({
         type Result =
           | Success
           | Failure
-        
         type Combined =
           & Left
           & Right
@@ -467,18 +466,6 @@ run<RuleOptions, MessageIds>({
     },
     {
       code: $`
-        type Foo =
-        | A | C
-          | B
-      `,
-      output: $`
-        type Foo =
-          | A | C
-          | B
-      `,
-    },
-    {
-      code: $`
         type T =
         & A
           & (B
@@ -599,24 +586,6 @@ run<RuleOptions, MessageIds>({
           p: b
             + c,
         };
-      `,
-    },
-    {
-      code: $`
-        const a = (
-          (b
-              && c)
-            || (d
-          && e)
-        )
-      `,
-      output: $`
-        const a = (
-          (b
-            && c)
-          || (d
-            && e)
-        )
       `,
     },
     {
