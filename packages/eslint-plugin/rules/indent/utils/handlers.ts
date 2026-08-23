@@ -554,45 +554,19 @@ export function checkBinaryTypeIndent(
   node: Tree.TSIntersectionType | Tree.TSUnionType,
   operator: '&' | '|',
 ) {
-  const { sourceCode, offsets, tokenInfo } = ctx
+  const { sourceCode, tokenInfo } = ctx
 
   if (isSingleLine(node))
     return
 
   const continuations = getBinaryTypeContinuations(ctx, node, operator)
 
-  for (const typeNode of node.types) {
-    let firstToken = sourceCode.getFirstToken(typeNode)!
-    let lastToken = sourceCode.getLastToken(typeNode)!
-    let openingParen = sourceCode.getTokenBefore(firstToken)
-    let closingParen = sourceCode.getTokenAfter(lastToken)
-
-    while (openingParen && closingParen && isOpeningParenToken(openingParen) && isClosingParenToken(closingParen)) {
-      offsets.matchOffsetOf(openingParen, closingParen)
-      firstToken = openingParen
-      lastToken = closingParen
-      openingParen = sourceCode.getTokenBefore(firstToken)
-      closingParen = sourceCode.getTokenAfter(lastToken)
-    }
-  }
-
   const firstToken = sourceCode.getFirstToken(node)!
   const rootAnchorToken = tokenInfo.getFirstTokenOfLine(firstToken)!
   const rootOffset = tokenInfo.isFirstTokenOfLine(firstToken) ? 0 : 1
 
   for (const { leftToken, operatorToken, rightToken } of continuations) {
-    const followsMultilineDelimitedType = firstToken.loc.start.line < leftToken.loc.start.line
-      && (
-        isClosingBraceToken(leftToken)
-        || isClosingBracketToken(leftToken)
-        || isClosingParenToken(leftToken)
-      )
-    const anchorToken = followsMultilineDelimitedType
-      ? tokenInfo.getFirstTokenOfLine(leftToken)!
-      : rootAnchorToken
-    const offset = followsMultilineDelimitedType ? 0 : rootOffset
-
-    addBinaryContinuationIndent(ctx, operatorToken, leftToken, rightToken, anchorToken, offset)
+    addBinaryContinuationIndent(ctx, operatorToken, leftToken, rightToken, rootAnchorToken, rootOffset)
   }
 }
 

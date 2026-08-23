@@ -61,27 +61,27 @@ run<RuleOptions, MessageIds>({
           = | {
             first: boolean
           }
-          | {
-            second: boolean
-          }
+            | {
+              second: boolean
+            }
       `,
       $`
         type Placement =
           | (
             | 'before'
             | 'after'
-            )
-            | false
+          )
+          | false
       `,
       $`
         type Nested =
           | (
             | A
             | B
-            )
-            | {
-              value: C
-            }
+          )
+          | {
+            value: C
+          }
       `,
       $`
         type Options =
