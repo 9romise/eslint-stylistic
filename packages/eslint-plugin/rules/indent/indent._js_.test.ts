@@ -2761,7 +2761,7 @@ run<RuleOptions, MessageIds>({
       function foo() {
           return (bar === 1 || bar === 2 &&
               (/Function/.test(grandparent.type))) &&
-          directives(parent).indexOf(node) >= 0;
+              directives(parent).indexOf(node) >= 0;
       }
     `,
     {

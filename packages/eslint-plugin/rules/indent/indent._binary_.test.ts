@@ -14,6 +14,22 @@ run<RuleOptions, MessageIds>({
           + baz
       `,
       $`
+        const value = foo
+          + bar
+          - baz
+      `,
+      $`
+        const value = foo
+          || bar
+            && baz
+      `,
+      $`
+        const value =
+          foo
+            * bar
+          / baz
+      `,
+      $`
         const value = foo +
           bar
       `,
@@ -29,7 +45,14 @@ run<RuleOptions, MessageIds>({
         if ((
           foo
           || bar)
-        && baz) {}
+          && baz) {}
+      `,
+      $`
+        type Result = (
+          A
+          | B
+        )
+          | C
       `,
       $`
         const value = (
@@ -266,6 +289,32 @@ run<RuleOptions, MessageIds>({
         const value = foo
           + bar
           + baz
+      `,
+    },
+    {
+      code: $`
+        const value = foo
+          || bar
+          && baz
+      `,
+      output: $`
+        const value = foo
+          || bar
+            && baz
+      `,
+    },
+    {
+      code: $`
+        const value =
+          foo
+          * bar
+          / baz
+      `,
+      output: $`
+        const value =
+          foo
+            * bar
+          / baz
       `,
     },
     {

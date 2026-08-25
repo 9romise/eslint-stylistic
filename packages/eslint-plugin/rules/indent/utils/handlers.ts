@@ -5,6 +5,7 @@ import type { TokenInfo } from './token-info'
 import {
   AST_NODE_TYPES,
   createGlobalLinebreakMatcher,
+  getPrecedence,
   isClosingBraceToken,
   isClosingBracketToken,
   isClosingParenToken,
@@ -17,6 +18,7 @@ import {
   isOpeningBracketToken,
   isOpeningParenToken,
   isOptionalChainPunctuator,
+  isParenthesised,
   isQuestionToken,
   isSemicolonToken,
   isSingleLine,
@@ -504,41 +506,71 @@ function addBinaryContinuationIndent(
   }
 }
 
+function canFlattenBinaryExpression(
+  parent: Tree.BinaryExpression | Tree.LogicalExpression,
+  child: Tree.BinaryExpression | Tree.LogicalExpression,
+) {
+  if (getPrecedence(parent) !== getPrecedence(child))
+    return false
+
+  if (parent.type === AST_NODE_TYPES.LogicalExpression)
+    return parent.operator === child.operator
+
+  switch (parent.operator) {
+    case '**':
+    case '%':
+    case '==':
+    case '!=':
+    case '===':
+    case '!==':
+    case '<<':
+    case '>>':
+    case '>>>':
+      return false
+    case '*':
+    case '/':
+      return parent.operator === child.operator
+    default:
+      return true
+  }
+}
+
 function getBinaryExpressionRoot(ctx: IndentContext, node: Tree.BinaryExpression | Tree.LogicalExpression) {
   const { sourceCode } = ctx
   let root = node
+  let nested = false
 
   while (isBinaryExpressionNode(root.parent)) {
-    if (root.parent.right === root && isOpeningParenToken(sourceCode.getTokenBefore(root)!))
+    if (isParenthesised(sourceCode, root))
       break
+
+    if (!canFlattenBinaryExpression(root.parent, root)) {
+      nested = true
+      break
+    }
 
     root = root.parent
   }
 
-  return root
+  return { root, nested }
 }
 
 export function checkBinaryExpressionIndent(
   ctx: IndentContext,
   node: Tree.BinaryExpression | Tree.LogicalExpression,
 ) {
-  const { sourceCode, tokenInfo } = ctx
-
   if (isSingleLine(node))
     return
+
+  const { sourceCode, tokenInfo } = ctx
 
   const operatorToken = sourceCode.getTokenBefore(node.right, token => token.value === node.operator)!
   const leftToken = sourceCode.getTokenBefore(operatorToken)!
   const rightToken = sourceCode.getTokenAfter(operatorToken)!
-  const root = getBinaryExpressionRoot(ctx, node)
+  const { root, nested } = getBinaryExpressionRoot(ctx, node)
   const firstToken = sourceCode.getFirstToken(root)!
-  const wrapsLeftOperand = isOpeningParenToken(firstToken)
-    && sourceCode.getTokenBefore(root.left) === firstToken
-    && sourceCode.getTokenAfter(root.left) === leftToken
-    && !isBinaryExpressionNode(root.parent)
-    && firstToken.loc.end.line < leftToken.loc.start.line
-  const anchorToken = wrapsLeftOperand ? firstToken : tokenInfo.getFirstTokenOfLine(firstToken)!
-  const offset = wrapsLeftOperand || tokenInfo.isFirstTokenOfLine(firstToken) ? 0 : 1
+  const anchorToken = tokenInfo.getFirstTokenOfLine(firstToken)!
+  const offset = nested || !tokenInfo.isFirstTokenOfLine(firstToken) ? 1 : 0
 
   addBinaryContinuationIndent(ctx, operatorToken, leftToken, rightToken, anchorToken, offset)
 }
@@ -548,14 +580,14 @@ export function checkBinaryTypeIndent(
   node: Tree.TSIntersectionType | Tree.TSUnionType,
   operator: '&' | '|',
 ) {
-  const { sourceCode, tokenInfo } = ctx
-
   if (isSingleLine(node))
     return
 
+  const { sourceCode, tokenInfo } = ctx
+
   const firstToken = sourceCode.getFirstToken(node)!
-  const rootAnchorToken = tokenInfo.getFirstTokenOfLine(firstToken)!
-  const rootOffset = tokenInfo.isFirstTokenOfLine(firstToken) ? 0 : 1
+  const anchorToken = tokenInfo.getFirstTokenOfLine(firstToken)!
+  const offset = tokenInfo.isFirstTokenOfLine(firstToken) ? 0 : 1
 
   for (const typeNode of node.types) {
     const operatorToken = sourceCode.getTokenBefore(typeNode)
@@ -568,8 +600,8 @@ export function checkBinaryTypeIndent(
       operatorToken,
       sourceCode.getTokenBefore(operatorToken)!,
       sourceCode.getTokenAfter(operatorToken)!,
-      rootAnchorToken,
-      rootOffset,
+      anchorToken,
+      offset,
     )
   }
 }

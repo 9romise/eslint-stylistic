@@ -790,7 +790,7 @@ export default createRule<RuleOptions, MessageIds>({
         // Only indent the arguments if the NewExpression has parens (e.g. `new Foo(bar)` or `new Foo()`, but not `new Foo`
         if (node.arguments.length > 0
           || isClosingParenToken(sourceCode.getLastToken(node)!)
-          && isOpeningParenToken(sourceCode.getLastToken(node, 1)!)) {
+            && isOpeningParenToken(sourceCode.getLastToken(node, 1)!)) {
           addFunctionCallIndent(ctx, node)
         }
       },
